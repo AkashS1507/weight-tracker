@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weight Tracker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #1e293b;
+    }
+
+    .input-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+    }
+
+    input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .card {
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h3 {
+      color: #475569;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      color: #0f172a;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .list-card {
+      grid-column: span 2;
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+
+    .list-card ul {
+      list-style: none;
+      margin-top: 0.6rem;
+    }
+
+    .list-card li {
+      background: #e2e8f0;
+      margin: 0.4rem 0;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .empty {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>🏋️‍♂️ Weight Tracker</h1>
+
+    <div class="input-section">
+      <input type="number" id="weightInput" placeholder="Enter weight (kg)" />
+      <button id="addBtn">Add</button>
+    </div>
+
+    <div class="stats">
+      <div class="list-card">
+        <h3>Last 3 Days</h3>
+        <ul id="lastWeights"><li class="empty">No data yet</li></ul>
+      </div>
+
+      <div class="card">
+        <h3>Highest</h3>
+        <p id="highestWeight">--</p>
+      </div>
+
+      <div class="card">
+        <h3>Lowest</h3>
+        <p id="lowestWeight">--</p>
+      </div>
+    </div>
+
+    <footer>Data saved locally • MongoDB ready</footer>
+  </div>
+
+  <script>
+    const addBtn = document.getElementById('addBtn');
+    const weightInput = document.getElementById('weightInput');
+    const lastWeightsList = document.getElementById('lastWeights');
+    const highestWeight = document.getElementById('highestWeight');
+    const lowestWeight = document.getElementById('lowestWeight');
+
+    let weights = JSON.parse(localStorage.getItem('weights')) || [];
+
+    function renderWeights() {
+      if (weights.length === 0) {
+        lastWeightsList.innerHTML = '<li class=\"empty\">No data yet</li>';
+        highestWeight.textContent = '--';
+        lowestWeight.textContent = '--';
+        return;
+      }
+
+      const lastThree = weights.slice(-3).reverse();
+      lastWeightsList.innerHTML = lastThree.map(w => `<li>${w} kg</li>`).join('');
+      highestWeight.textContent = Math.max(...weights) + ' kg';
+      lowestWeight.textContent = Math.min(...weights) + ' kg';
+    }
+
+    addBtn.addEventListener('click', () => {
+      const weight = parseFloat(weightInput.value);
+      if (!weight) return;
+      weights.push(weight);
+      localStorage.setItem('weights', JSON.stringify(weights));
+      weightInput.value = '';
+      renderWeights();
+    });
+
+    // Placeholder for MongoDB integration
+    // Example: fetch('/api/weights', { method: 'POST', body: JSON.stringify({ weight }) })
+
+    renderWeights();
+  </script>
+</body>
+</html>
