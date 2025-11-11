@@ -18,6 +18,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 1rem;
     }
 
     .wrapper {
@@ -25,21 +26,15 @@
       padding: 2rem 2.5rem;
       border-radius: 1.5rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      width: 90%;
+      width: 100%;
       max-width: 420px;
       text-align: center;
       animation: fadeIn 0.8s ease;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
@@ -54,6 +49,7 @@
       justify-content: center;
       gap: 0.6rem;
       margin-bottom: 1.8rem;
+      flex-wrap: wrap;
     }
 
     input {
@@ -64,6 +60,7 @@
       font-size: 1rem;
       outline: none;
       transition: border-color 0.3s;
+      min-width: 150px;
     }
 
     input:focus {
@@ -79,6 +76,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: 0.3s;
+      flex-shrink: 0;
     }
 
     button:hover {
@@ -122,6 +120,7 @@
     .list-card ul {
       list-style: none;
       margin-top: 0.6rem;
+      padding: 0;
     }
 
     .list-card li {
@@ -142,6 +141,37 @@
       margin-top: 1.5rem;
       font-size: 0.85rem;
       color: #64748b;
+    }
+
+    /* 🌐 Responsive Design */
+    @media (max-width: 480px) {
+      .wrapper {
+        padding: 1.5rem;
+        border-radius: 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .input-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+
+      input, button {
+        width: 100%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .list-card {
+        grid-column: 1;
+      }
     }
   </style>
 </head>
