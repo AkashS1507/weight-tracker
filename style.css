@@ -67,7 +67,7 @@
         border-color: #2563eb;
     }
 
-    button {
+    #addBtn {
         background: #2563eb;
         color: white;
         border: none;
@@ -79,7 +79,7 @@
         flex-shrink: 0;
     }
 
-    button:hover {
+    #addBtn:hover {
         background: #1e40af;
     }
 
@@ -154,6 +154,7 @@
         justify-content: center;
         align-items: center;
         gap: 0.4rem;
+        white-space: nowrap;
     }
 
     .reset-btn {
@@ -193,7 +194,7 @@
         }
 
         input,
-        button {
+        #addBtn {
             width: 100%;
         }
 
